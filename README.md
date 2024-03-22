@@ -10,7 +10,7 @@
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
 [![GitHub Issues](https://img.shields.io/badge/issues-0%20open-red)](https://github.com/malledugean/rocket-hackathon-op/issues)
 [![GitHub Pull Requests](https://img.shields.io/badge/pull%20requests-0%20pull-yellow)](https://github.com/malledugean/rocket-hackathon-op/pulls)
-[![License](https://img.shields.io/badge/license-CC--BY--4.0-blue) ](LICENSE.md)
+[![License](https://img.shields.io/badge/license-CC--BY--4.0-blue) ](#license)
 
 </div>
 
@@ -64,7 +64,7 @@ Comsiderando o tempo disponível o escopo foi limitado a:
 -   Criação e gerenciamento de perfis de usuários (Comunidade, Campanha e Gerente de Comunidade).
 -   Criação e de campanhas de financiamentos coletivos.
 -   Processamento de doações  online (chain currency).
--   Desempenho e escalabilidade da plataforma ([optimism](https://www.optimism.io/).
+-   Desempenho e escalabilidade da plataforma [optimism](https://www.optimism.io/).
 -   Design intuitivo e amigável para todos os públicos.
 -   Segurança da informação  (proteção contra fraudes - dados publicos!).
 
@@ -130,7 +130,7 @@ xxx xxx
 -  [Node.js](https://nodejs.org/)
 -  [Python](https://www.python.org/)
 
-## 🤲 Contribuindo:
+## 🤲 Contribuindo: <a name = "license"></a>
 
 Se você está interessado em contribuir para o projeto Transformando Futuros, por favor, consulte o Guia de Contribuição: URL do guia de contribuição.
 
@@ -149,7 +149,6 @@ Este projeto está licenciado sob a licença Creative Commons Attribution 4.0 In
 
 A licença CC-BY-4.0 permite que você compartilhe, remixie, adapte e construa a partir deste projeto, mesmo que comercialmente, desde que você dê crédito ao autor original.
 Você pode encontrar mais informações sobre a licença CC-BY-4.0 aqui: https://creativecommons.org/licenses/by/4.0/deed.en.
-Esperamos
 
 
 ## 🎉 Agradecimentos <a name = "acknowledgments"></a>
