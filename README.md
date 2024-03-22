@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img src="https://i.imgur.com/XG63jgi.png" alt="Rocket Project logo"></a>
+ <img src="https://i.imgur.com/XG63jgi.png" alt="Rocket Project logo" width="300" height="300"></a>
 </p>
 <h3 align="center">Transformando Futuros: Democratizando a Educação com Web3</h3>
 
@@ -8,75 +8,89 @@
 
 [![Hackathon](https://img.shields.io/badge/hackathon-name-orange.svg)](https://nearx.notion.site/Hackathon-Optimism-NearX-21124cc4067042cc95bc1c2434322faf)
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![GitHub Issues](https://img.shields.io/github/issues/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/pulls)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
+[![GitHub Issues](https://img.shields.io/badge/issues-0%20open-red)](https://github.com/malledugean/rocket-hackathon-op/issues)
+[![GitHub Pull Requests](https://img.shields.io/badge/pull%20requests-0%20pull-yellow)](https://github.com/malledugean/rocket-hackathon-op/pulls)
+[![License](https://img.shields.io/badge/license-CC--CY--4.0-blue) ](LICENSE.md)
 
 </div>
 
 ---
 
-<p align="center"> Few lines describing your project.
-    <br> 
+<p align="center"> O projeto Transformando Futuros visa utilizar a tecnologia Web3 para democratizar o acesso à educação de qualidade no Brasil. Através de um marketplace descentralizado de cursos online, ferramentas de ensino de código aberto e um sistema de financiamento coletivo, o projeto busca empoderar professores e alunos, fortalecer comunidades e construir um futuro educacional mais justo e inclusivo.
+    <br><br> Nesta fase estamos iniciamos o projeto com o <b>financiamento coletivo</b> para o Hackathon da [Nearx](https://nearx.com.br/) .
 </p>
 
 ## 📝 Table of Contents
 
--   [Problem Statement](#problem_statement)
--   [Idea / Solution](#idea)
+-   [Problema](#problem_statement)
+-   [Solução](#idea)
 -   [Dependencies / Limitations](#limitations)
--   [Future Scope](#future_scope)
--   [Setting up a local environment](#getting_started)
--   [Usage](#usage)
+-   [Futuro](#future_scope)
+-   [Apresentação](#getting_started)
+-   [Uso](#usage)
 -   [Technology Stack](#tech_stack)
--   [Contributing](../CONTRIBUTING.md)
--   [Authors](#authors)
--   [Acknowledgments](#acknowledgments)
+-   [Autores](#authors)
+-   [Agradecimentos](#acknowledgments)
 
-## 🧐 Problem Statement <a name = "problem_statement"></a>
+## 🧐 Problema <a name = "problem_statement"></a>
 
-It is useful to design and follow a specific format when writing a problem statement. While there are several options
-for doing this, the following is a simple and straightforward template often used in Business Analysis to maintain
-focus on defining the problem.
+**Desigualdade no acesso à educação:**
+-   Milhares de crianças e jovens no Brasil não têm acesso à educação de qualidade.
+-   Falta de infraestrutura, materiais didáticos e professores qualificados.
+  
+**Impacto na vida das pessoas:**
+-   Limita as oportunidades de emprego e renda.
+-   Aumenta a pobreza e a desigualdade social
 
--   IDEAL: This section is used to describe the desired or “to be” state of the process or product. At large, this section
-    should illustrate what the expected environment would look like once the solution is implemented.
--   REALITY: This section is used to describe the current or “as is” state of the process or product.
--   CONSEQUENCES: This section is used to describe the impacts on the business if the problem is not fixed or improved upon.
-    This includes costs associated with loss of money, time, productivity, competitive advantage, and so forth.
 
-Following this format will result in a workable document that can be used to understand the problem and elicit
-requirements that will lead to a winning solution.
+## 💡 Solução <a name = "idea"></a>
 
-## 💡 Idea / Solution <a name = "idea"></a>
+**Sistema de financiamento coletivo:**
+-   Plataforma online Web3 que permite a arrecadação de recursos para projetos sociais.
+-   Ferramenta poderosa para democratizar o acesso à educação.
 
-This section is used to describe potential solutions.
+**Transformando Futuros:**
+-   Projeto que utiliza financiamentos coletivos, também conhecido como **vaquinhas**, para financiar projetos educacionais em comunidades carentes.
+-   Foco em:
+    -   Infraestrutura escolar
+    -   Materiais didáticos
+    -   Formação de professores
 
-Once the ideal, reality, and consequences sections have been
-completed, and understood, it becomes easier to provide a solution for solving the problem.
+## ⛓️ Limitações <a name = "limitations"></a>
 
-## ⛓️ Dependencies / Limitations <a name = "limitations"></a>
+Comsiderando o tempo disponível o escopo foi limitado a:
+-   Criação e gerenciamento de perfis de usuários (Comunidade, Campanha e Gerente de Comunidade).
+-   Criação e de campanhas de financiamentos coletivos.
+-   Processamento de doações  online (chain currency).
+-   Desempenho e escalabilidade da plataforma ([optimism](https://www.optimism.io/).
+-   Design intuitivo e amigável para todos os públicos.
+-   Segurança da informação  (proteção contra fraudes - dados publicos!).
 
--   What are the dependencies of your project?
--   Describe each limitation in detailed but concise terms
--   Explain why each limitation exists
--   Provide the reasons why each limitation could not be overcome using the method(s) chosen to acquire.
--   Assess the impact of each limitation in relation to the overall findings and conclusions of your project, and if
-    appropriate, describe how these limitations could point to the need for further research.
 
-## 🚀 Future Scope <a name = "future_scope"></a>
+## 🚀 Futuro <a name = "future_scope"></a>
 
-Write about what you could not develop during the course of the Hackathon; and about what your project can achieve
-in the future.
+**Novas Funcionalidades**
+-   Acompanhamento do progresso das campanhas e da utilização dos recursos.
+-   Sistema de comunicação interna para doadores, beneficiários e ONGs.
+-   Relatórios de desempenho e  acompanhamento de metas.
+-   Integração com redes sociais.
+-   Segurança da informação  (Hub centralizado con atualizações transparentes e auditáveis).
+-   Acessibilidade para pessoas com deficiência.
 
-## 🏁 Getting Started <a name = "getting_started"></a>
+**Lançamento da plataforma online:**
+-   Divulgação da plataforma para o público-alvo.
+-   Realização de campanhas de marketing e comunicação.
 
-These instructions will get you a copy of the project up and running on your local machine for development
-and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
+**Treinamento de usuários:**
+-   Criação de materiais de treinamento para doadores, beneficiários e ONGs.
+-   Oferta de suporte técnico para auxiliar na utilização da plataforma.
 
-### Prerequisites
 
-What things you need to install the software and how to install them.
+## 🏁 Apresentação <a name = "getting_started"></a>
+
+Veja um resumo de tudo em nossa super apresentação no [Loom](https://www.loom.com/looms/videos)
+
+
 
 ```
 Give examples
@@ -88,9 +102,7 @@ A step by step series of examples that tell you how to get a development env run
 
 Say what the step will be
 
-```
-Give the example
-```
+
 
 And repeat
 
@@ -98,26 +110,51 @@ And repeat
 until finished
 ```
 
-## 🎈 Usage <a name="usage"></a>
+## 🎈 Uso <a name="usage"></a>
 
-Add notes about how to use the system.
+### Execução local Manual
+Na pasta smatcontracts, inicie o forge local
+```
+forge -b 10
+```
 
-## ⛏️ Built With <a name = "tech_stack"></a>
+Ainda na mesma pasta, instale os contratos na BlockChain
+```
+./deploy-on-local.sh 
+```
 
--   [MongoDB](https://www.mongodb.com/) - Database
--   [Express](https://expressjs.com/) - Server Framework
--   [VueJs](https://vuejs.org/) - Web Framework
--   [NodeJs](https://nodejs.org/en/) - Server Environment
+Agora no frontend instale as dependencias e execute o servidor local
+```
+yarn
+yarn dev
+```
+### Execução local Docker
 
-## ✍️ Authors <a name = "authors"></a>
+Na pasta raiz, execute
+```
+xxx xxx
+```
 
--   [@kylelobo](https://github.com/kylelobo) - Idea & Initial work
 
-See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors)
-who participated in this project.
+### Execução local Manual
 
-## 🎉 Acknowledgments <a name = "acknowledgments"></a>
+## ⛏️ Construído com as Tecnologias<a name = "tech_stack"></a>
 
--   Hat tip to anyone whose code was used
--   Inspiration
--   References
+-  [Web3 Optimism](https://www.optimism.io/)
+-  [Docker](https://www.docker.com/)
+-  [Foundry](https://book.getfoundry.sh/)
+-  [Node.js](https://nodejs.org/)
+-  [Python](https://www.python.org/)
+
+
+## ✍️ Autores <a name = "authors"></a>
+
+-   [@malledugean](https://github.com/malledugean) - Desenvolvimento BackEnd, FrontEnd e Documentação
+-   Mia - Gerenciamento do Projeto e Ideia
+
+
+## 🎉 Agradecimentos <a name = "acknowledgments"></a>
+
+-   Criado com base no [framework Web3 NearX ](https://github.com/nrxschool/hackathon-op-template)
+-   Inspiration - Temas definidos e muito braimstorm
+
