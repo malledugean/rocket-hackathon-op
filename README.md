@@ -29,7 +29,9 @@
 -   [Apresentação](#getting_started)
 -   [Uso](#usage)
 -   [Technology Stack](#tech_stack)
+-   [Contribuindo](#donate)
 -   [Autores](#authors)
+-   [Licença](#license)
 -   [Agradecimentos](#acknowledgments)
 
 ## 🧐 Problema <a name = "problem_statement"></a>
@@ -120,7 +122,7 @@ xxx xxx
 
 ### Execução local Manual
 
-## ⛏️ Construído com as Tecnologias<a name = "tech_stack"></a>
+## ⛏️ Tecnologias<a name = "tech_stack"></a>
 
 -  [Web3 Optimism](https://www.optimism.io/)
 -  [Docker](https://www.docker.com/)
@@ -128,15 +130,34 @@ xxx xxx
 -  [Node.js](https://nodejs.org/)
 -  [Python](https://www.python.org/)
 
+## 🤲 Contribuindo:
+
+Se você está interessado em contribuir para o projeto Transformando Futuros, por favor, consulte o Guia de Contribuição: URL do guia de contribuição.
+
 
 ## ✍️ Autores <a name = "authors"></a>
 
 -   [@malledugean](https://github.com/malledugean) - Desenvolvimento BackEnd, FrontEnd e Documentação
 -   Mia - Gerenciamento do Projeto e Ideia
 
+## 📜 Licença: <a name = "license"></a>
+
+Este projeto está licenciado sob a licença Creative Commons Attribution 4.0 International (CC-BY-4.0).
+
+
+### Informações adicionais:
+
+A licença CC-BY-4.0 permite que você compartilhe, remixie, adapte e construa a partir deste projeto, mesmo que comercialmente, desde que você dê crédito ao autor original.
+Você pode encontrar mais informações sobre a licença CC-BY-4.0 aqui: https://creativecommons.org/licenses/by/4.0/deed.en.
+Esperamos
+
 
 ## 🎉 Agradecimentos <a name = "acknowledgments"></a>
 
+A equipe do Transformando Futuros agradece a todos que contribuem para o projeto, seja com doações, tempo, talento ou ideias. Juntos, podemos construir um futuro melhor para a educação!
+
 -   Criado com base no [framework Web3 NearX ](https://github.com/nrxschool/hackathon-op-template)
 -   Inspiration - Temas definidos e muito braimstorm
+
+
 
