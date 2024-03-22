@@ -10,7 +10,7 @@
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
 [![GitHub Issues](https://img.shields.io/badge/issues-0%20open-red)](https://github.com/malledugean/rocket-hackathon-op/issues)
 [![GitHub Pull Requests](https://img.shields.io/badge/pull%20requests-0%20pull-yellow)](https://github.com/malledugean/rocket-hackathon-op/pulls)
-[![License](https://img.shields.io/badge/license-CC--CY--4.0-blue) ](LICENSE.md)
+[![License](https://img.shields.io/badge/license-CC--BY--4.0-blue) ](LICENSE.md)
 
 </div>
 
@@ -88,27 +88,9 @@ Comsiderando o tempo disponível o escopo foi limitado a:
 
 ## 🏁 Apresentação <a name = "getting_started"></a>
 
-Veja um resumo de tudo em nossa super apresentação no [Loom](https://www.loom.com/looms/videos)
+Veja um resumo de tudo em nossa super apresentação no [Loom](https://www.loom.com/looms/
 
 
-
-```
-Give examples
-```
-
-### Installing
-
-A step by step series of examples that tell you how to get a development env running.
-
-Say what the step will be
-
-
-
-And repeat
-
-```
-until finished
-```
 
 ## 🎈 Uso <a name="usage"></a>
 
