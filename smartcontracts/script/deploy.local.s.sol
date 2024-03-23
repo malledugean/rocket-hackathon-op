@@ -26,15 +26,22 @@ contract Local is Script {
         // console2.log("Counter address: ", address(counter));
 
         communityManager = new CommunityManager(payable(manager));
+        communityManager.setDiamond(manager);
+
+        // communityManager = new CommunityManager(payable(manager));
         console2.log("Counter address: ", address(communityManager));
 
-        community = communityManager.addCommunity(1001, "comunidate Web3", "A melhor comunidade", communityOwner1);
+        community = new Community();
+        community.setDiamond(manager);
+        // community = communityManager.addCommunity(1001, "comunidate Web3", "A melhor comunidade", communityOwner1);
         console2.log("Counter address: ", address(community));
 
-        vm.prank(communityOwner1);
-        campaign = community.addCampaign{value: 0.00005 ether}("Super campanha 2024 para aprendizado em Web3", 5 ether);
+        campaign = new Campaign(address(community));
+        campaign.setDiamond(manager);
+        // vm.prank(communityOwner1);
+        // campaign = community.addCampaign{value: 0.00005 ether}("Super campanha 2024 para aprendizado em Web3", 5 ether);
         console2.log("Counter address: ", address(campaign));
-        vm.stopPrank();
+        // vm.stopPrank();
 
         vm.stopBroadcast();
     }

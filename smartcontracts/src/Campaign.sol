@@ -24,6 +24,8 @@ contract Campaign is BaseFacet {
     // uint256 public commisionAmount;
     // bool public active;
 
+    address public communityAddress;
+
     uint256 public raisedAmountAcc;
     uint256 public feeAmountAcc;
     uint256 public commisionAmountAcc;
@@ -33,8 +35,9 @@ contract Campaign is BaseFacet {
     /**
      * @dev Constructor that takes the name and description and initializes the Campaign.
      */
-    constructor()  {
+    constructor(address _addressCommunity) {
         creator = msg.sender;
+        communityAddress = _addressCommunity;
     }
 
     function AddCampaing(
@@ -126,7 +129,7 @@ contract Campaign is BaseFacet {
     /**
      * @dev Allows campaign owners to withdraw raised funds after the campaign is inactive.
      */
-    function withdrawFunds(uint64 _campaignId) external onlyCampaignOwner {
+    function withdrawFunds(uint64 _campaignId) external onlyCampaignOwner(_campaignId) {
         require(campaing[_campaignId].active == false, "Campaign must be inactive to withdraw funds");
         require(campaing[_campaignId].raisedAmount > 0 == false, "Campaign have no funds to transfer");
         payable(campaing[_campaignId].owner).transfer(campaing[_campaignId].raisedAmount);
@@ -140,10 +143,13 @@ contract Campaign is BaseFacet {
      *
      * - The caller must be the owner of the campaign contract (enforced by the `onlyCampaignOwner` modifier).
      */
-    function transferToCommunityFunds(uint64 _id) external onlyCampaignOwner {
+    function transferToCommunityFunds(uint64 _id) external onlyCampaignOwner(_id) {
         require(campaing[_id].active == false, "Campaign must be inactive to withdraw funds");
         require(campaing[_id].raisedAmount > 0 == false, "Campaign have no funds to transfer");
-        Community(_id).donate{value: campaing[_id].raisedAmount}();
+        // Community(payable (communityAddress)).donate{value: campaing[_id].raisedAmount}();
+        // Line 150:
+        Community(payable(communityAddress)).donate{value: campaing[_id].raisedAmount}(_id);
+
         campaing[_id].raisedAmount = 0;
     }
 
@@ -154,10 +160,10 @@ contract Campaign is BaseFacet {
      *
      * - The caller must be the owner of the campaign contract (enforced by the `onlyCampaignOwner` modifier).
      */
-    function closeCampaign(uint64 _id) external onlyCampaignOwner {
+    function closeCampaign(uint64 _id) external onlyCampaignOwner(_id) {
         require(campaing[_id].active == false, "Campaign must be active to allow closure");
 
-        campaing[_id].active == false = false;
+        campaing[_id].active = false;
     }
 
     /**
@@ -168,7 +174,7 @@ contract Campaign is BaseFacet {
      *
      * - The caller must be the owner of the campaign contract (enforced by `onlyCampaignOwner` modifier).
      */
-    function setActive(uint64 _id) external onlyCampaignOwner {
+    function setActive(uint64 _id) external onlyCampaignOwner(_id) {
         campaing[_id].active = true;
     }
 
@@ -194,7 +200,7 @@ contract Campaign is BaseFacet {
      */
     modifier onlyCampaignOwner(uint64 _id) {
         // Campaign facet = Campaign(diamond);
-        require(this.isCampaignOwner(msg.sender), "Only Campaign Owner can call this function");
+        require(this.isCampaignOwner(msg.sender, _id), "Only Campaign Owner can call this function");
         _;
     }
 

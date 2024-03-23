@@ -12,9 +12,13 @@ contract BaseSetup is Utils {
     Diamond diamond;
     CommunityManager communityManager;
     Community community;
-    Community community2;
     Campaign campaign;
     Donor donation;
+
+    uint64 communityId;
+    uint64 campaignId;
+    uint64 communityId1;
+    uint64 communityId2;
 
     address[] _users;
     address controller;
@@ -22,12 +26,15 @@ contract BaseSetup is Utils {
     address bob;
     address eve;
     address trent;
-    address community1owner1;
-    address community2owner1;
+    address communityOwner1;
+    address communityOwner2;
     address payable manager;
     address donor1;
     address hackUser;
     address zero;
+
+    address manager1;
+    address manager2;
 
     function setUp() public virtual {
         _users = createUsers(10);
@@ -38,11 +45,19 @@ contract BaseSetup is Utils {
         eve = _users[3];
         trent = _users[4];
         zero = address(0x0);
-        community1owner1 = _users[5];
-        community2owner1 = _users[6];
+        communityOwner1 = _users[5];
+        communityOwner2 = _users[6];
         manager = payable(_users[7]);
         donor1 = _users[8];
         hackUser = _users[9];
+        manager1 = _users[10];
+        manager2 = _users[911];
+
+        communityId = 1001;
+        campaignId = 1001;
+
+        communityId1 = 100;
+        communityId2 = 200;
 
         vm.label(controller, "CONTROLLER");
         vm.label(alice, "ALICE");
@@ -50,8 +65,8 @@ contract BaseSetup is Utils {
         vm.label(eve, "EVE");
         vm.label(trent, "TRENT");
         vm.label(zero, "ZERO");
-        vm.label(community1owner1, "Baixada Sul educa");
-        vm.label(community2owner1, "ZL na educacao");
+        vm.label(communityOwner1, "Baixada Sul educa");
+        vm.label(communityOwner2, "ZL na educacao");
         vm.label(manager, "TF Boss");
         vm.label(donor1, "Big Heart");
         vm.label(hackUser, "Bunny");
@@ -59,18 +74,24 @@ contract BaseSetup is Utils {
         vm.startPrank(controller);
         donation = new Donor();
         communityManager = new CommunityManager(manager);
-        community =
-            communityManager.addCommunity(1001, "comunidate1", "A melhor comunidade para teste", community1owner1);
-        community2 =
-            communityManager.addCommunity(1002, "comunidate2", "A maior comunidade para teste", community2owner1);
+        communityManager.setDiamond(manager);
+
+        community = new Community();
+        community.setDiamond(manager);
+
+        campaign = new Campaign(address(community));
+        campaign.setDiamond(manager);
+        // communityManager.addCommunity(1001, "comunidate1", "A melhor comunidade para teste", communityOwner1);
+        // community2 =
+        //     communityManager.addCommunity(1002, "comunidate2", "A maior comunidade para teste", communityOwner2);
         vm.stopPrank();
 
-        vm.startPrank(community1owner1);
-        campaign = community.addCampaign{value: 0.0001 ether}("Super campanha 2024 para teste", 5 ether);
+        vm.startPrank(communityOwner1);
+        // campaign = community.addCampaign{value: 0.0001 ether}("Super campanha 2024 para teste", 5 ether);
         vm.stopPrank();
 
         vm.startPrank(donor1);
-        campaign.donate{value: 1 ether}();
+        // campaign.donate{value: 1 ether}();
 
         vm.stopPrank();
     }

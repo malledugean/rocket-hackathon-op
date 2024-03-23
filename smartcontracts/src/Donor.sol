@@ -13,10 +13,10 @@ contract Donor is BaseFacet {
      * @dev Allows a donor to donate to a specific campaign.
      * @param _campaingAddress Donation to Campaign.
      */
-    function donateToCampaign(address _campaingAddress) external payable {
+    function donateToCampaign(address _campaingAddress, uint64 _id) external payable {
         // Campaign(diamond).donate(_amount);
         uint256 _amount = msg.value;
-        Campaign(payable(_campaingAddress)).donate{value: _amount}();
+        Campaign(payable(_campaingAddress)).donate{value: _amount}(_id);
         donations[msg.sender].push(Donation(msg.sender, _amount, block.timestamp));
     }
 
@@ -24,9 +24,9 @@ contract Donor is BaseFacet {
      * @dev Allows a donor to donate directly to the community.
      * @param _communityAddress Donation to community.
      */
-    function donateToCommunity(address _communityAddress) external payable {
+    function donateToCommunity(address _communityAddress, uint64 _id) external payable {
         uint256 _amount = msg.value;
-        Community(payable(_communityAddress)).donate{value: _amount}();
+        Community(payable(_communityAddress)).donate{value: _amount}(_id);
         // Community(payable(_communityAddress)).donate(_amount);
         donations[msg.sender].push(Donation(msg.sender, _amount, block.timestamp)); // Year can be calculated from timestamp
     }

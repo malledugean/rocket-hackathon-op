@@ -187,8 +187,6 @@ contract CommunityManager is BaseFacet {
         _;
     }
 
-    // ... other community manager related functions
-
     /**
      * @dev It should return an array of function selectors
      * for all the public functions exposed by the facet.
