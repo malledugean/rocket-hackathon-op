@@ -1,13 +1,13 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: CC-BY-4.0
 pragma solidity ^0.8.18;
-
-pragma solidity ^0.8.15;
 
 import "./BaseFacet.sol";
 import "./Community.sol";
 import "./CommunityManager.sol";
 import "./Donor.sol";
 import "./Campaign.sol";
+
+import "./Structs.sol";
 
 contract Diamond {
     // Mapping of facet selectors to facet contracts

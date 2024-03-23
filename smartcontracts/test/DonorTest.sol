@@ -13,7 +13,6 @@ contract DonorTest is BaseSetup {
     function testDonateToCampaign_Success() public {
         // uint256 donationAmount = 1 ether;
 
-        
         // vm.startPrank(donor1);
         // donation.donateToCampaign{value: donationAmount}(address(campaign));
 
@@ -32,7 +31,6 @@ contract DonorTest is BaseSetup {
     }
 
     function testDonateToCommunity_Success() public {
-
         // donor.donateToCommunity{value: donationAmount}(communityAddress);
 
         // Donation[] storage donorDonations = donor.donations(address(this));

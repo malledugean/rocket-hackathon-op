@@ -1,9 +1,11 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: CC-BY-4.0
 pragma solidity ^0.8.18;
 
 import "./BaseFacet.sol";
 import "./CommunityManager.sol";
 import "./Campaign.sol";
+
+import "./Structs.sol";
 
 contract Community is BaseFacet {
     error CampaignAlredyCreated();
@@ -13,51 +15,76 @@ contract Community is BaseFacet {
 
     event Log(uint256 gas);
 
-    struct ExpenseReport {
-        // Mapping of expense category (string) to its amount (uint256)
-        mapping(string => uint256) expenses;
-        // Optional additional data (e.g., receipts, descriptions)
-        string[] reportData;
-        // Approvals mapping (address of approver to bool indicating approval)
-        mapping(address => bool) approvals;
-    }
-
-    struct CommunityData {
-        string name;
-        string description;
-        bool allowedCampaign;
-        Campaign currentCampaign;
-        mapping(address => bool) approvedExpenses; // Mapping of approved expense addresses
-        mapping(uint256 => ExpenseReport) expenseReports; // Mapping of year to expense report
-    }
-
-    uint64 public id;
-    uint256 public raisedAmount;
-    uint256 public feeAmount;
-    uint256 public commisionAmount;
-
-    address payable public communityManagerAddress;
+    uint256 public raisedAmountAcc;
+    uint256 public feeAmountAcc;
+    uint256 public commisionAmountAcc;
 
     mapping(uint64 => CommunityData) public community;
 
-    mapping(address => bool) public communityOwners;
-    address public communityOwner;
-
     /**
      * @dev Constructor that takes the name and description and initializes the Community.
-     * @param _name Name of the community.
-     * @param _description Description of the community.
      */
-    constructor(uint64 _id, string memory _name, string memory _description, address _communityOwner) {
+    constructor() {
+        creator = msg.sender;
+    }
+
+    function AddCommunity(
+        uint64 _id,
+        string memory _name,
+        string memory _description,
+        bool _allowedCampaign,
+        uint8 _campaignId
+    ) public {
+        require(!(community[_id].id > 0), "Community with this ID already exists");
+
+        // community[_id] = CommunityData(0, _name, _description, _allowedCampaign, _campaignId, 0, 0, 0); // Initialize directly in storage
+
+        // community[_id] = CommunityData({
+        //     id: _id,
+        //     name: _name,
+        //     description: _description,
+        //     allowedCampaign: _allowedCampaign,
+        //     campaignId: _campaignId,
+        //     raisedAmount: 0,
+        //     feeAmount: 0,
+        //     commisionAmount: 0
+        // });
+
+        community[_id].id = _id; // Initialize fields individually
         community[_id].name = _name;
-        id = _id;
         community[_id].description = _description;
-        community[_id].allowedCampaign = true;
+        community[_id].allowedCampaign = _allowedCampaign;
+        community[_id].campaignId = _campaignId;
+        community[_id].raisedAmount = 0;
+        community[_id].feeAmount = 0;
+        community[_id].commisionAmount = 0;
+    }
 
-        communityOwners[_communityOwner] = true;
-        communityOwner = _communityOwner;
+    function exists(uint64 _id) public view returns (bool) {
+        return community[_id].id > 0; // Check if ID field in CommunityData is greater than 0
+    }
 
-        communityManagerAddress = payable(msg.sender);
+    function RemoveCommunity(uint64 _id) public {
+        require(exists(_id), "Community does not exist");
+        delete community[_id];
+    }
+
+    function GetCommunity(uint64 _id)
+        public
+        view
+        returns (uint64, string memory, string memory, bool, uint8, uint256, uint256, uint256)
+    {
+        require(exists(_id), "Community does not exist");
+        return (
+            community[_id].id,
+            community[_id].name,
+            community[_id].description,
+            community[_id].allowedCampaign,
+            community[_id].campaignId,
+            community[_id].raisedAmount,
+            community[_id].feeAmount,
+            community[_id].commisionAmount
+        );
     }
 
     /**
@@ -108,28 +135,31 @@ contract Community is BaseFacet {
         // return report.reportData; // Access report data within the ExpenseReport struct
     }
 
-    function addCampaign(string memory _description, uint256 _targetAmount)
-        payable public
-        onlyCommunityOwner
+    function addCampaign(uint64 _communityID, string memory _description, uint256 _targetAmount)
+        public
+        payable
+        onlyCommunityOwner(_communityID)
         returns (Campaign)
     {
-        Campaign newCampaign = new Campaign{value: msg.value}(address(this), msg.sender, _description, _targetAmount);
+        // Campaign newCampaign = new Campaign{value: msg.value}(address(this), msg.sender, _description, _targetAmount);
 
-        if (community[id].allowedCampaign) {
-            community[id].currentCampaign = newCampaign;
-            community[id].allowedCampaign = false;
-        } else {
-            // Campaign is already registered
-            revert CampaignAlredyCreated();
-        }
+        // if (community[id].allowedCampaign) {
+        //     community[id].currentCampaign = newCampaign;
+        //     community[id].allowedCampaign = false;
+        // } else {
+        //     // Campaign is already registered
+        //     revert CampaignAlredyCreated();
+        // }
 
-        return newCampaign;
+        // return newCampaign;
     }
 
     /**
      * @dev Allows users to donate to a campaign.
      */
-    function donate() public payable  {
+    function donate(uint64 _id) public payable {
+        require(exists(_id), "Community does not exist");
+
         uint256 _amount = msg.value;
         // tx.gasprice * tx.gaslimit
         uint256 feeStorage = 100000;
@@ -137,40 +167,36 @@ contract Community is BaseFacet {
             revert MinimunToPayNotAchieved();
         }
         uint256 commission = _amount * 1 / 1000;
-        if (_amount >= 200000)
-        {
+        if (_amount >= 200000) {
             _amount = _amount - commission - feeStorage;
             // payable(communityManagerAddress).transfer(commission);
-
-        }
-        else {
-            if (_amount >= 100101){
+        } else {
+            if (_amount >= 100101) {
                 _amount = _amount - commission - feeStorage;
-            } 
-            else  {
-                if (_amount > commission){ 
+            } else {
+                if (_amount > commission) {
                     _amount = 0;
                     feeStorage = _amount - commission;
-                }
-                else {
+                } else {
                     feeStorage = _amount;
                     commission = 0;
                     _amount = 0;
-
                 }
             }
         }
-        feeAmount += feeStorage;
-        commisionAmount += commission;
-        raisedAmount += _amount;
+        feeAmountAcc += feeStorage;
+        commisionAmountAcc += commission;
+        raisedAmountAcc += _amount;
+
+        community[_id].feeAmount += feeStorage;
+        community[_id].commisionAmount += commission;
+        community[_id].raisedAmount += _amount;
     }
-
-
 
     /**
      * @dev Allows campaign owners to withdraw raised funds after the campaign is inactive.
      */
-    function withdrawFunds() external view onlyCommunityOwner {
+    function withdrawFunds(uint64 _communityID) external view onlyCommunityOwner(_communityID) {
         // require(active == false, "Campaign must be inactive to withdraw funds");
         revert CommuntyFundsCannotBeWithdraw();
     }
@@ -187,8 +213,8 @@ contract Community is BaseFacet {
     /**
      * @dev Modifier to restrict function calls to Community Owner.
      */
-    modifier onlyCommunityOwner() {
-        require(msg.sender == communityOwner, "Only Community Owner can call this function");
+    modifier onlyCommunityOwner(uint64 _communityID) {
+        require(community[_communityID].communityOwners[msg.sender], "Only Community Owner can call this function");
         _;
     }
 
@@ -214,7 +240,7 @@ contract Community is BaseFacet {
         return selectors;
     }
 
-    receive()  external payable {
+    receive() external payable {
         revert CommuntyPaymmentMustUseDonateFunction();
     }
 

@@ -16,7 +16,7 @@ contract CampaignTest is BaseSetup {
         uint256 targetAmount = 10 ether;
 
         vm.startPrank(community2owner1);
-        campaign2 = community2.addCampaign{value:0.0005 ether}("Mega campanha 2024 para teste isolado", targetAmount);
+        campaign2 = community2.addCampaign{value: 0.0005 ether}("Mega campanha 2024 para teste isolado", targetAmount);
 
         // vm.expectEmit(campaign, "CampaignCreated", creator, address(community), targetAmount);
 
@@ -39,7 +39,7 @@ contract CampaignTest is BaseSetup {
         uint256 tax = donationAmount * 1 / 1000;
         uint256 initialCondition = campaign.raisedAmount();
         uint256 feeStorage = 100000;
-        uint256 expectedRaisedAmount = donationAmount - tax +  initialCondition - feeStorage;
+        uint256 expectedRaisedAmount = donationAmount - tax + initialCondition - feeStorage;
 
         vm.startPrank(donor1);
         // vm.expectEmit(campaign, "DonationReceived", donor, donationAmount);
@@ -85,27 +85,24 @@ contract CampaignTest is BaseSetup {
     function testDeacivateCampaign_Success() public {
         vm.startPrank(community1owner1);
 
-        
         assertTrue(campaign.active());
         campaign.closeCampaign();
-        
+
         assertFalse(campaign.active());
 
         vm.stopPrank();
     }
 
     function testWithdrawFunds_FailOwner() public {
-
         vm.expectRevert("Only Campaign Owner can call this function");
         campaign.withdrawFunds();
     }
 
     function testWithdrawFunds_Success() public {
         vm.startPrank(community1owner1);
-        
+
         campaign.closeCampaign();
         uint256 initialBalance = address(community1owner1).balance;
-
 
         console.log(address(campaign).balance);
         console.log(initialBalance);
@@ -121,10 +118,9 @@ contract CampaignTest is BaseSetup {
         vm.stopPrank();
     }
 
-    
     function testTransferToCommunityFunds_Success() public {
         vm.startPrank(community1owner1);
-        
+
         campaign.closeCampaign();
         uint256 initialBalance = address(community).balance;
 

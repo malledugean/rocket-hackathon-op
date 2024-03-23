@@ -1,19 +1,21 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: CC-BY-4.0
 pragma solidity ^0.8.18;
-pragma solidity ^0.8.15;
 
 import "./BaseFacet.sol";
 import "./Community.sol";
+
+import "./Structs.sol";
 
 contract CommunityManager is BaseFacet {
     error CommuntyAlredyRegistered();
 
     mapping(address => bool) public communityManagers;
-    address public communityManager;
+    address[] public communityManagerList;
 
     uint24 private communitiesCount;
 
     mapping(uint64 => Community) public communities;
+    mapping(uint64 => bool) public communityRegistered;
     uint64[] public communityList;
 
     /**
@@ -24,7 +26,76 @@ contract CommunityManager is BaseFacet {
         communitiesCount = 0;
 
         communityManagers[_manager] = true;
-        communityManager = _manager;
+        communityManagerList.push(_manager);
+    }
+
+    function addManager(address _newManager) public onlyCommunityManager {
+        require(!communityManagers[_newManager], "Address already a community manager");
+
+        communityManagers[_newManager] = true;
+        communityManagerList.push(_newManager);
+    }
+
+    function removeManager(address _oldManager) public onlyCommunityManager {
+        require(communityManagers[_oldManager], "Address not a community manager");
+        require(_oldManager != msg.sender, "You cannot remove yourself, please ask another manager");
+
+        // Find the index of the address in the list
+        uint256 index = 0;
+        while (index < communityManagerList.length && communityManagerList[index] != _oldManager) {
+            index++;
+        }
+
+        require(index < communityManagerList.length, "Community manager not found in list");
+
+        // Shift elements to remove the address at the found index
+        for (uint256 i = index; i < communityManagerList.length - 1; i++) {
+            communityManagerList[i] = communityManagerList[i + 1];
+        }
+
+        // Reduce the array size by 1 (optional, for gas optimization)
+        communityManagerList.pop();
+
+        delete communityManagers[_oldManager]; // Delete from mapping
+    }
+
+    function listManager() public view returns (address[] memory) {
+        return communityManagerList;
+    }
+
+    function addCommunity(uint64 _newCommunityId) public onlyCommunityManager {
+        require(!communityRegistered[_newCommunityId], "Community already exists");
+
+        communityList.push(_newCommunityId);
+        communitiesCount++;
+        communityRegistered[_newCommunityId] = true;
+    }
+
+    function removeCommunity(uint64 _communityId) public onlyCommunityManager {
+        require(communityRegistered[_communityId], "Community does not exist");
+
+        // Find the index of the ID in the list
+        uint256 index = 0;
+        while (index < communityList.length && communityList[index] != _communityId) {
+            index++;
+        }
+
+        require(index < communityList.length, "Community ID not found in list");
+
+        // Shift elements to remove the ID at the found index
+        for (uint256 i = index; i < communityList.length - 1; i++) {
+            communityList[i] = communityList[i + 1];
+        }
+
+        // Reduce the array size by 1 (optional, for gas optimization)
+        communityList.pop();
+
+        communitiesCount--;
+        communityRegistered[_communityId] = false;
+    }
+
+    function listCommunity() public view returns (uint64[] memory) {
+        return communityList;
     }
 
     /**
@@ -33,8 +104,11 @@ contract CommunityManager is BaseFacet {
      * @param _isManager Boolean indicating community manager status (True for manager, False otherwise).
      */
     function setCommunityManager(address _manager, bool _isManager) external onlyCommunityManager {
-        communityManagers[_manager] = _isManager;
-        communityManager = _manager;
+        if (_isManager) {
+            addManager(_manager);
+        } else {
+            removeManager(_manager);
+        }
     }
 
     /**
@@ -63,8 +137,7 @@ contract CommunityManager is BaseFacet {
      *
      */
     function getCommunityManagerWallet() external view returns (address payable) {
-        // Implement logic to retrieve the community manager's wallet address
-        return payable(communityManager);
+        return payable(diamond);
     }
 
     /**
@@ -80,32 +153,24 @@ contract CommunityManager is BaseFacet {
         return result;
     }
 
-    function addCommunity(uint64 _id, string memory _name, string memory _description, address _communityOwner)
-        public
-        returns (Community)
-    {
-        Community newCommunity = new Community(_id, _name, _description, _communityOwner);
-        if (isCommunityRegistered(_id)) {
-            // Community is already registered
-            revert CommuntyAlredyRegistered();
-        } else {
-            communityList.push(_id);
-            communitiesCount++;
-        }
+    // function addCommunity(uint64 _id, string memory _name, string memory _description, address _communityOwner)
+    //     public
+    //     returns (Community)
+    // {
+    //     Community newCommunity = new Community(_id, _name, _description, _communityOwner);
+    //     if (isCommunityRegistered(_id)) {
+    //         // Community is already registered
+    //         revert CommuntyAlredyRegistered();
+    //     } else {
+    //         communityList.push(_id);
+    //         communitiesCount++;
+    //     }
 
-        return newCommunity;
-    }
+    //     return newCommunity;
+    // }
 
     function isCommunityRegistered(uint64 _id) public view returns (bool) {
-        bool result = false;
-        uint64[] memory list = communityList;
-        for (uint24 i = 0; i < communitiesCount; i++) {
-            uint64 item = list[i];
-            if (item == _id) {
-                result = true;
-                break;
-            }
-        }
+        bool result = communityRegistered[_id];
         return result;
     }
 

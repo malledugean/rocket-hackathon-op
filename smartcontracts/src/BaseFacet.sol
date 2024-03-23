@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: CC-BY-4.0
 pragma solidity ^0.8.18;
 
 /**
@@ -8,6 +8,7 @@ pragma solidity ^0.8.18;
 abstract contract BaseFacet {
     // Address of the Diamond contract
     address public diamond;
+    address internal creator;
 
     /**
      * @dev Modifier to restrict function calls to the Diamond contract.

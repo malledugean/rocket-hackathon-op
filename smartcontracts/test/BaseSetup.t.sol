@@ -69,7 +69,6 @@ contract BaseSetup is Utils {
         campaign = community.addCampaign{value: 0.0001 ether}("Super campanha 2024 para teste", 5 ether);
         vm.stopPrank();
 
-        
         vm.startPrank(donor1);
         campaign.donate{value: 1 ether}();
 

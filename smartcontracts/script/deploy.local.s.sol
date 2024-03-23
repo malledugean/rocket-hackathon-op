@@ -28,8 +28,7 @@ contract Local is Script {
         communityManager = new CommunityManager(payable(manager));
         console2.log("Counter address: ", address(communityManager));
 
-        community =
-            communityManager.addCommunity(1001, "comunidate Web3", "A melhor comunidade", communityOwner1);
+        community = communityManager.addCommunity(1001, "comunidate Web3", "A melhor comunidade", communityOwner1);
         console2.log("Counter address: ", address(community));
 
         vm.prank(communityOwner1);

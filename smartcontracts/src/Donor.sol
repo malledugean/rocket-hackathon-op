@@ -1,19 +1,12 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: CC-BY-4.0
 pragma solidity ^0.8.18;
-
-pragma solidity ^0.8.15;
 
 import "./BaseFacet.sol";
 import "./Campaign.sol";
 import "./Community.sol";
+import "./Structs.sol";
 
 contract Donor is BaseFacet {
-    struct Donation {
-        address donor;
-        uint256 amount;
-        uint256 timestamp; // Year of donation
-    } 
-
     mapping(address => Donation[]) public donations;
 
     /**
@@ -23,7 +16,7 @@ contract Donor is BaseFacet {
     function donateToCampaign(address _campaingAddress) external payable {
         // Campaign(diamond).donate(_amount);
         uint256 _amount = msg.value;
-        Campaign(payable(_campaingAddress)).donate{value:_amount}();
+        Campaign(payable(_campaingAddress)).donate{value: _amount}();
         donations[msg.sender].push(Donation(msg.sender, _amount, block.timestamp));
     }
 
@@ -33,7 +26,7 @@ contract Donor is BaseFacet {
      */
     function donateToCommunity(address _communityAddress) external payable {
         uint256 _amount = msg.value;
-        Community(payable(_communityAddress)).donate{value:_amount}();
+        Community(payable(_communityAddress)).donate{value: _amount}();
         // Community(payable(_communityAddress)).donate(_amount);
         donations[msg.sender].push(Donation(msg.sender, _amount, block.timestamp)); // Year can be calculated from timestamp
     }
@@ -43,8 +36,11 @@ contract Donor is BaseFacet {
      * @param _donor Address of the donor.
      * @return Array of Donation structs representing the donor's history.
      */
-    function getDonations(address _donor) external view returns (address[] memory,   uint256[] memory, uint256[] memory) {
-
+    function getDonations(address _donor)
+        external
+        view
+        returns (address[] memory, uint256[] memory, uint256[] memory)
+    {
         Donation[] memory donationArray = donations[_donor];
 
         address[] memory donor = new address[](0);
@@ -53,10 +49,10 @@ contract Donor is BaseFacet {
 
         uint256 size = donationArray.length;
 
-        for (uint i = 0; i < size; i++) {
+        for (uint256 i = 0; i < size; i++) {
             donor[i] = donationArray[i].donor;
             amount[i] = donationArray[i].amount;
-            timestamp[i] = donationArray[i].timestamp; 
+            timestamp[i] = donationArray[i].timestamp;
         }
 
         return (donor, amount, timestamp);
